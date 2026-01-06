@@ -11,8 +11,8 @@ export class OrderController {
     const items = await this.orderService.create(order);
 
     return {
-      total: items.length,
-      items,
+      total: items.length ?? 0,
+      items: items ?? [],
     };
   }
 }

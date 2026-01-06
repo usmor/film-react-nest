@@ -18,8 +18,8 @@ export class FilmsController {
     const film = await this.filmsService.findById(id);
     const schedule = film.schedule;
     return {
-      total: schedule.length,
-      items: schedule,
+      total: schedule.length ?? 0,
+      items: schedule ?? [],
     };
   }
 }
