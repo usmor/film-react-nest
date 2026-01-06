@@ -4,7 +4,6 @@ import { FilmDto } from '../dto/films.dto';
 import { Film } from '../schemas/film.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
-
 export class FilmsMongoDbRepository implements FilmsRepository {
   constructor(@InjectModel(Film.name) private filmModel: Model<Film>) {}
 
