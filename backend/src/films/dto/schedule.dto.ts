@@ -33,7 +33,7 @@ export class ScheduleDto {
     return {
       id: entity.id,
       daytime: entity.daytime.toISOString(),
-      hall: entity.hall.toString(),
+      hall: entity.hall,
       rows: entity.rows,
       seats: entity.seats,
       price: entity.price,
