@@ -1,34 +1,63 @@
-import mongoose, { Schema } from 'mongoose';
-import { ScheduleDto } from '../dto/schedule.dto';
-import { FilmDto } from '../dto/films.dto';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export const ScheduleSchema = new Schema({
-  id: { type: String, required: true, unique: true },
-  daytime: { type: Date, required: true },
-  hall: { type: Number, required: true },
-  rows: { type: Number, required: true },
-  seats: { type: Number, required: true },
-  price: { type: Number, required: true },
-  taken: { type: [String], default: [] },
-});
+@Schema({ _id: false })
+export class Schedule {
+  @Prop({ required: true })
+  id: string;
 
-ScheduleSchema.methods.toDTO = function (): ScheduleDto {
-  return ScheduleDto.fromEntity(this);
-};
+  @Prop({ required: true })
+  daytime: Date;
 
-export const FilmSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  rating: { type: Number, required: true },
-  director: { type: String, required: true },
-  tags: { type: [String], required: true },
-  image: { type: String, required: true },
-  cover: { type: String, required: true },
-  title: { type: String, required: true },
-  about: { type: String, required: true },
-  description: { type: String, required: true },
-  schedule: { type: [ScheduleSchema], required: true },
-});
+  @Prop({ required: true })
+  hall: number;
 
-FilmSchema.methods.toDTO = function (): FilmDto {
-  return FilmDto.fromEntity(this);
-};
+  @Prop({ required: true })
+  rows: number;
+
+  @Prop({ required: true })
+  seats: number;
+
+  @Prop({ required: true })
+  price: number;
+
+  @Prop({ type: [String], default: [] })
+  taken: string[];
+}
+
+export const ScheduleSchema = SchemaFactory.createForClass(Schedule);
+
+@Schema()
+export class Film extends Document {
+  @Prop({ required: true, unique: true })
+  id: string;
+
+  @Prop({ required: true })
+  rating: number;
+
+  @Prop({ required: true })
+  director: string;
+
+  @Prop({ type: [String], required: true })
+  tags: string[];
+
+  @Prop({ required: true })
+  image: string;
+
+  @Prop({ required: true })
+  cover: string;
+
+  @Prop({ required: true })
+  title: string;
+
+  @Prop({ required: true })
+  about: string;
+
+  @Prop({ required: true })
+  description: string;
+
+  @Prop({ type: [ScheduleSchema], required: true })
+  schedule: Schedule[];
+}
+
+export const FilmSchema = SchemaFactory.createForClass(Film);

@@ -1,12 +1,12 @@
-import { model } from 'mongoose';
+import { Model } from 'mongoose';
 import { FilmsRepository } from './films.repository.interface';
-import { FilmSchema } from '../schemas/film.schema';
 import { FilmDto } from '../dto/films.dto';
+import { Film } from '../schemas/film.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
-const FilmModel = model('Film', FilmSchema);
 
 export class FilmsMongoDbRepository implements FilmsRepository {
-  private filmModel = FilmModel;
+  constructor(@InjectModel(Film.name) private filmModel: Model<Film>) {}
 
   async save(film: Omit<FilmDto, 'id'>): Promise<FilmDto> {
     const created = await this.filmModel.create(film);
