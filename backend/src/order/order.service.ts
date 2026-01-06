@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { FilmsMongoDbRepository } from '../films/repositories/films.mongodb.repository';
 import { CreateOrderDto } from './dto/order.dto';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class OrderService {
@@ -45,7 +45,7 @@ export class OrderService {
 
       finalOrder.push({
         ...ticket,
-        id: uuid(),
+        id: randomUUID(),
       });
     }
 
