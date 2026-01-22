@@ -1,11 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { FilmsMongoDbRepository } from '../films/repositories/films.mongodb.repository';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
 import { randomUUID } from 'node:crypto';
+import { FilmsRepository } from '../films/repositories/films.repository.interface';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly filmsRepository: FilmsMongoDbRepository) {}
+  constructor(
+    @Inject('FilmsRepository')
+    private readonly filmsRepository: FilmsRepository,
+  ) {}
 
   async create(order: CreateOrderDto) {
     if (!order.tickets.length) {

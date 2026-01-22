@@ -32,7 +32,7 @@ export class ScheduleDto {
   static fromEntity(entity): ScheduleDto {
     return {
       id: entity.id,
-      daytime: entity.daytime.toISOString(),
+      daytime: entity.daytime,
       hall: entity.hall,
       rows: entity.rows,
       seats: entity.seats,
