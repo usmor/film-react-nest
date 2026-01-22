@@ -12,7 +12,7 @@ import 'dotenv/config';
 @Module({})
 export class DatabaseModule {
   static register(): DynamicModule {
-    const driver = process.env.DATABASE_DRIVER || 'mongodb';
+    const driver = process.env.DATABASE_DRIVER || 'postgres';
     const imports = [];
     const providers = [];
 
@@ -23,7 +23,7 @@ export class DatabaseModule {
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
-              uri: config.get<string>('DATABASE_URL'),
+             uri: config.get<string>('DATABASE_URL') || 'mongodb://localhost:27017/afisha',
             }),
           }),
           MongooseModule.forFeature([
@@ -43,13 +43,13 @@ export class DatabaseModule {
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
               type: 'postgres',
-              host: config.get<string>('DATABASE_HOST'),
-              port: config.get<number>('DATABASE_PORT'),
-              username: config.get<string>('DATABASE_USERNAME'),
-              password: config.get<string>('DATABASE_PASSWORD'),
-              database: config.get<string>('DATABASE_NAME'),
+              host: config.get<string>('DATABASE_HOST', 'localhost'),
+              port: config.get<number>('DATABASE_PORT', 5432),
+              username: config.get<string>('DATABASE_USERNAME', 'prac'),
+              password: config.get<string>('DATABASE_PASSWORD', 'prac'),
+              database: config.get<string>('DATABASE_NAME', 'prac'),
               entities: [Film, Schedule],
-              synchronize: config.get<boolean>('DATABASE_SYNCHRONIZE'),
+              synchronize: config.get<boolean>('DATABASE_SYNCHRONIZE', false),
               logging: true,
             }),
           }),
