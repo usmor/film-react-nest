@@ -12,7 +12,7 @@ import 'dotenv/config';
 @Module({})
 export class DatabaseModule {
   static register(): DynamicModule {
-    const driver = process.env.DATABASE_DRIVER || 'postgres';
+    const driver = process.env.DATABASE_DRIVER || 'mongodb';
     const imports = [];
     const providers = [];
 
