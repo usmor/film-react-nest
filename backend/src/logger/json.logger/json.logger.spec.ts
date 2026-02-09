@@ -14,23 +14,33 @@ describe('JsonLogger', () => {
     errorSpy = jest.spyOn(console, 'error').mockImplementation();
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+    logSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
+
   describe('log', () => {
     it('should log a basic message WITHOUT params', () => {
       logger.log(message);
 
       expect(logSpy).toHaveBeenCalledTimes(1);
-      expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(
-        /^{"level":"log","message":"Test message","optionalParams":\[\],"timestamp":".*"}$/
-      ));
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /^{\"level\":\"log\","\message":\"Test message\",\"optionalParams\":\[\],\"timestamp\":\".*\"}$/,
+        ),
+      );
     });
 
     it('should log a basic message WITH params', () => {
       logger.log(message, ...params);
 
       expect(logSpy).toHaveBeenCalledTimes(1);
-      expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(
-        /^{"level":"log","message":"Test message","optionalParams":\["param1","param2"\],"timestamp":".*"}$/
-      ));
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /^{"level":"log","message":"Test message","optionalParams":\["param1","param2"\],"timestamp":".*"}$/,
+        ),
+      );
     });
   });
 
@@ -39,18 +49,22 @@ describe('JsonLogger', () => {
       logger.error(errorMessage);
 
       expect(errorSpy).toHaveBeenCalledTimes(1);
-      expect(errorSpy).toHaveBeenCalledWith(expect.stringMatching(
-        /^{"level":"error","message":"Test error message","optionalParams":\[\],"timestamp":".*"}$/
-      ));
+      expect(errorSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /^{\"level\":\"error\","\message":\"Test error message\",\"optionalParams\":\[\],\"timestamp\":\".*\"}$/,
+        ),
+      );
     });
 
     it('should log an error message WITH params', () => {
       logger.error(errorMessage, ...params);
 
       expect(errorSpy).toHaveBeenCalledTimes(1);
-      expect(errorSpy).toHaveBeenCalledWith(expect.stringMatching(
-        /^{"level":"error","message":"Test error message","optionalParams":\["param1","param2"\],"timestamp":".*"}$/
-      ));
+      expect(errorSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /^{"level":"error","message":"Test error message","optionalParams":\["param1","param2"\],"timestamp":".*"}$/,
+        ),
+      );
     });
   });
 });
