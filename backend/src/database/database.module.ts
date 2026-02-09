@@ -23,7 +23,10 @@ export class DatabaseModule {
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
-             uri: config.get<string>('DATABASE_URL', 'mongodb://localhost:27017/afisha'),
+              uri: config.get<string>(
+                'DATABASE_URL',
+                'mongodb://localhost:27017/afisha',
+              ),
             }),
           }),
           MongooseModule.forFeature([
