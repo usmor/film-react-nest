@@ -7,7 +7,7 @@ import {
   IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { ScheduleDto } from './schedule.dto';
+import { ScheduleDto } from '../../schedules/dto/schedule.dto';
 
 export class FilmDto {
   @IsUUID()

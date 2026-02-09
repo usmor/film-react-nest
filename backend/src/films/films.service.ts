@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { FilmsMongoDbRepository } from './repositories/films.mongodb.repository';
+import { Inject, Injectable } from '@nestjs/common';
 import { FilmDto } from './dto/films.dto';
+import { FilmsRepository } from './repositories/films.repository.interface';
 
 @Injectable()
 export class FilmsService {
-  constructor(private readonly filmsRepository: FilmsMongoDbRepository) {}
+  constructor(
+    @Inject('FilmsRepository')
+    private readonly filmsRepository: FilmsRepository,
+  ) {}
 
   create(data: Omit<FilmDto, 'id'>) {
     try {
