@@ -6,9 +6,9 @@ env:
 
 on:
   push:
-    branches: [review-3]
+    branches: [review3]
   pull_request:
-    branches: [review-3]
+    branches: [review3]
 
 permissions:
   contents: read
